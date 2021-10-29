@@ -1,0 +1,3 @@
+[submodule "discord-api-types"]
+	path = discord-api-types
+	url = https://github.com/discordjs/discord-api-types

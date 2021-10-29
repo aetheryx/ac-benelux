@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 14",
+
+  "compilerOptions": {
+    "lib": ["es2020", "DOM"],
+    "module": "CommonJS",
+    "target": "es2020",
+    "baseUrl": ".",
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "incremental": true,
+    "paths": {
+      "@acbot/util/*": ["src/util/*"],
+      "discord-api-types": ["discord-api-types/v8"]
+    }
+  }
+}
