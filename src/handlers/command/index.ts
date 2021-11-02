@@ -1,7 +1,8 @@
 import { APIApplicationCommandInteraction, APIInteractionResponseChannelMessageWithSource, ApplicationCommandInteractionDataOptionString, ApplicationCommandType, InteractionResponseType } from 'discord-api-types';
+import { Command } from 'src/commands';
 import { Promisable } from 'type-fest';
-import { collections, Command } from '../autocomplete/collections';
-import { renderers } from './renderer';
+import { collections } from '../autocomplete/collections';
+import { renderers, Language } from './renderer';
 
 export function handleCommandInteraction(
   interaction: APIApplicationCommandInteraction
@@ -16,7 +17,7 @@ export function handleCommandInteraction(
   const category = collection[command];
   const renderer = renderers[command];
   const item = category.data.get(query.value);
-  const embed = renderer(item);
+  const embed = renderer(item, languageOption.value as Language);
 
   return {
     type: InteractionResponseType.ChannelMessageWithSource,

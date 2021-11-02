@@ -2,6 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 14",
 
+  "exclude": [
+    "discord-api-types/"
+  ],
+
   "compilerOptions": {
     "lib": ["es2020", "DOM"],
     "module": "CommonJS",

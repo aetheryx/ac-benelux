@@ -1,7 +1,16 @@
+import { ICreature } from 'animal-crossing';
 import {
   Category as ConstructionCategory,
   Source as ConstructionSource,
 } from 'animal-crossing/lib/types/Construction';
+import {
+  Shadow as CreatureShadow,
+  MovementSpeed as CreatureMovementSpeed,
+  Vision as CreatureVision,
+  Weather as CreatureWeather,
+  Color as CreatureColor,
+  CatchDifficulty as CreatureCatchDifficulty,
+} from 'animal-crossing/lib/types/Creature';
 import {
   Gender as VillagerGender,
   Hobby as VillagerHobby,
@@ -70,5 +79,101 @@ export namespace Villager {
     [VillagerColor.Red]: 'Rood',
     [VillagerColor.White]: 'Wit',
     [VillagerColor.Yellow]: 'Geel',
+  };
+}
+
+export namespace Creature {
+  export const Shadow: Translation<CreatureShadow> = {
+    [CreatureShadow.Large]: 'Large',
+    [CreatureShadow.Long]: 'Long',
+    [CreatureShadow.Medium]: 'Medium',
+    [CreatureShadow.Small]: 'Small',
+    [CreatureShadow.XLarge]: 'X-Large',
+    [CreatureShadow.XLargeWFin]: 'X-Large w/Fin',
+    [CreatureShadow.XSmall]: 'X-Small',
+    [CreatureShadow.XXLarge]: 'XX-Large',
+  };
+
+  export const MovementSpeed: Translation<CreatureMovementSpeed> = {
+    [CreatureMovementSpeed.Fast]: 'Fast',
+    [CreatureMovementSpeed.Medium]: 'Medium',
+    [CreatureMovementSpeed.Slow]: 'Slow',
+    [CreatureMovementSpeed.Stationary]: 'Stationary',
+    [CreatureMovementSpeed.VeryFast]: 'Very fast',
+    [CreatureMovementSpeed.VerySlow]: 'Very slow',
+  };
+
+  export const Vision: Translation<CreatureVision> = {
+    [CreatureVision.Medium]: 'Medium',
+    [CreatureVision.Narrow]: 'Narrow',
+    [CreatureVision.VeryNarrow]: 'Very Narrow',
+    [CreatureVision.VeryWide]: 'Very Wide',
+    [CreatureVision.Wide]: 'Wide',
+  };
+
+  export const Weather: Translation<CreatureWeather> = {
+    [CreatureWeather.AnyExceptRain]: 'Any except rain',
+    [CreatureWeather.AnyWeather]: 'Any weather',
+    [CreatureWeather.RainOnly]: 'Rain only',
+  };
+
+  export const WhereHow: Translation<ICreature['whereHow']> = {
+    undefined,
+    'On trees (any kind)': 'On trees (any kind)',
+    'Flying near flowers': 'Flying near flowers',
+    'Sea': 'Sea',
+    'River': 'River',
+    'On rotten turnips or candy': 'On rotten turnips or candy',
+    'Shaking trees (hardwood or cedar only)': 'Shaking trees (hardwood or cedar only)',
+    'Flying near water': 'Flying near water',
+    'On the ground': 'On the ground',
+    'Pier': 'Pier',
+    'On palm trees': 'On palm trees',
+    'On hardwood/cedar trees': 'On hardwood/cedar trees',
+    'Pond': 'Pond',
+    'From hitting rocks': 'From hitting rocks',
+    'River (clifftop)': 'River (clifftop)',
+    'On tree stumps': 'On tree stumps',
+    'Sea (rainy days)': 'Sea (rainy days)',
+    'Flying': 'Flying',
+    'On rivers/ponds': 'On rivers/ponds',
+    'Pushing snowballs': 'Pushing snowballs',
+    'On villagers': 'On villagers',
+    'Flying near trash (boots, tires, cans, used fountain fireworks) or rotten turnips': 'Flying near trash (boots, tires, cans, used fountain fireworks) or rotten turnips',
+    'Disguised on shoreline': 'Disguised on shoreline',
+    'River (mouth)': 'River (mouth)',
+    'On flowers': 'On flowers',
+    'Underground (dig where noise is loudest)': 'Underground (dig where noise is loudest)',
+    'Flying near light sources': 'Flying near light sources',
+    'On white flowers': 'On white flowers',
+    'Flying near blue/purple/black flowers': 'Flying near blue/purple/black flowers',
+    'On rocks/bushes': 'On rocks/bushes',
+    'Disguised under trees': 'Disguised under trees',
+    'Shaking trees': 'Shaking trees',
+    'On beach rocks': 'On beach rocks',
+  };
+
+  export const Color: Translation<CreatureColor> = {
+    [CreatureColor.Aqua]: 'Aqua',
+    [CreatureColor.Beige]: 'Beige',
+    [CreatureColor.Black]: 'Black',
+    [CreatureColor.Blue]: 'Blue',
+    [CreatureColor.Brown]: 'Brown',
+    [CreatureColor.Gray]: 'Gray',
+    [CreatureColor.Green]: 'Green',
+    [CreatureColor.Orange]: 'Orange',
+    [CreatureColor.Pink]: 'Pink',
+    [CreatureColor.Purple]: 'Purple',
+    [CreatureColor.Red]: 'Red',
+    [CreatureColor.White]: 'White',
+    [CreatureColor.Yellow]: 'Yellow',
+  };
+
+  export const CatchDifficulty: Translation<CreatureCatchDifficulty> = {
+    [CreatureCatchDifficulty.Easy]: 'Easy',
+    [CreatureCatchDifficulty.Hard]: 'Hard',
+    [CreatureCatchDifficulty.Medium]: 'Medium',
+    [CreatureCatchDifficulty.VeryEasy]: 'Very Easy',
+    [CreatureCatchDifficulty.VeryHard]: 'Very Hard',
   };
 }
