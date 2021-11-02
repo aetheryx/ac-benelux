@@ -1,7 +1,8 @@
 import { APIApplicationCommandAutocompleteResponse, ApplicationCommandInteractionDataOptionString, ApplicationCommandType, InteractionResponseType } from 'discord-api-types';
 import { Promisable } from 'type-fest';
 import { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/payloads/v8/_interactions/autocomplete';
-import { collections, Command } from './collections';
+import { collections } from './collections';
+import { Command } from 'src/commands';
 
 const strip = (text: string) => text.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
 

@@ -1,8 +1,20 @@
 import * as AC from 'animal-crossing';
+import { Category as ConstructionCategory } from 'animal-crossing/lib/types/Construction';
+import { CreatureSourceSheet } from 'animal-crossing/lib/types/Creature';
+import { Category as ItemSourceSheet } from 'animal-crossing/lib/types/Item';
 import Fuse from 'fuse.js';
+import { Command } from '../../commands';
 
-export type Value = AC.IConstruction | AC.IRecipe | AC.IVillager | AC.IReaction | AC.IItem;
-export type Command = 'constructie' | 'diy' | 'eilandbewoner' | 'reactie' | 'item';
+export type Value =
+  | AC.IConstruction
+  | AC.ICreature
+  | AC.IItem
+  | AC.IReaction
+  | AC.ISeasonsAndEvents
+  | AC.IRecipe
+  | AC.IVillager
+  | AC.INPC;
+
 type Collection = {
   [K in Command]: {
     data: Map<string, Value>;
@@ -12,11 +24,72 @@ type Collection = {
 };
 
 const commandToData: Record<Command, Value[]> = {
-  constructie: AC.construction,
-  diy: AC.recipes,
-  eilandbewoner: AC.villagers,
+  huisrenovatie: AC.construction.filter(construction => [
+    ConstructionCategory.Roofing,
+    ConstructionCategory.Door,
+    ConstructionCategory.Siding,
+    ConstructionCategory.Mailbox,
+  ].includes(construction.category)),
+  constructie: AC.construction.filter(construction => [
+    ConstructionCategory.Incline,
+    ConstructionCategory.Bridge,
+  ].includes(construction.category)),
+
+  insect: AC.creatures.filter(creature => creature.sourceSheet === CreatureSourceSheet.Insects),
+  vis: AC.creatures.filter(creature => creature.sourceSheet === CreatureSourceSheet.Fish),
+  zeewezen: AC.creatures.filter(creature => creature.sourceSheet === CreatureSourceSheet.SeaCreatures),
+
+  fossiel: AC.items.filter(item => item.sourceSheet === ItemSourceSheet.Fossils),
+  hek: AC.items.filter(item => item.sourceSheet === ItemSourceSheet.Fencing),
+  kunst: AC.items.filter(item => item.sourceSheet === ItemSourceSheet.Art),
+  kleding: AC.items.filter(item => [
+    ItemSourceSheet.Accessories,
+    ItemSourceSheet.Tops,
+    ItemSourceSheet.Headwear,
+    ItemSourceSheet.Socks,
+    ItemSourceSheet.Bags,
+    ItemSourceSheet.Umbrellas,
+    ItemSourceSheet.Bottoms,
+    ItemSourceSheet.DressUp,
+    ItemSourceSheet.ClothingOther,
+  ].includes(item.sourceSheet)),
+  meubel: AC.items.filter(item => [
+    ItemSourceSheet.Housewares,
+    ItemSourceSheet.Posters,
+    ItemSourceSheet.Rugs,
+    ItemSourceSheet.WallMounted,
+    ItemSourceSheet.Wallpaper,
+  ].includes(item.sourceSheet)),
+  item: AC.items.filter(item => ![
+    ItemSourceSheet.Accessories,
+    ItemSourceSheet.Tops,
+    ItemSourceSheet.Headwear,
+    ItemSourceSheet.Socks,
+    ItemSourceSheet.Bags,
+    ItemSourceSheet.Umbrellas,
+    ItemSourceSheet.Bottoms,
+    ItemSourceSheet.DressUp,
+    ItemSourceSheet.ClothingOther,
+    ItemSourceSheet.Housewares,
+    ItemSourceSheet.Posters,
+    ItemSourceSheet.Rugs,
+    ItemSourceSheet.WallMounted,
+    ItemSourceSheet.Wallpaper,
+    ItemSourceSheet.Fossils,
+    ItemSourceSheet.Fencing,
+    ItemSourceSheet.Art,
+  ].includes(item.sourceSheet)),
+
   reactie: AC.reactions,
-  item: AC.items,
+
+  seizoen: AC.seasonsAndEvents.filter(seasonOrEvent => seasonOrEvent.type.toLowerCase().includes('season')),
+  event: AC.seasonsAndEvents.filter(seasonOrEvent => seasonOrEvent.type.toLowerCase().includes('event')),
+
+  diy: AC.recipes,
+
+  bewoner: AC.villagers,
+
+  npc: AC.npcs,
 };
 
 export const getEnglishName = (item: Value) => item.translations?.english ?? item.translations?.englishEurope ?? item.name;
