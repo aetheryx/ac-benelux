@@ -31,10 +31,6 @@ const sharedRenderers = {
       field('Aantal vangsten voor unlock', creature.totalCatchesToUnlock.toString()),
       field('Vorm', `${Translations.Creature.Shadow[creature.shadow]} (${creature.size})`),
       field('Kleuren', creature.colors.map(c => Translations.Creature.Color[c]).join(', ')),
-      field('Actief ritme', [
-        `Tijd: ${creature.hemispheres.north.time}`,
-        `Seizoen: ${creature.hemispheres.north.months}`,
-      ].join('\n')),
 
       creature.catchDifficulty && field('Moeilijkheidsgraad', Translations.Creature.CatchDifficulty[creature.catchDifficulty]),
       creature.movementSpeed && field('Snelheid', Translations.Creature.MovementSpeed[creature.movementSpeed]),
@@ -42,12 +38,16 @@ const sharedRenderers = {
       creature.whereHow && field('Waar en Hoe', Translations.Creature.WhereHow[creature.whereHow]),
       creature.weather && field('Weer', Translations.Creature.Weather[creature.weather]),
       creature.vision && field('Oogzicht', Translations.Creature.Vision[creature.vision]),
+      field('Actief ritme', [
+        `Tijd: ${creature.hemispheres.north.time}`,
+        `Seizoen: ${creature.hemispheres.north.months}`,
+      ].join('\n')),
     ],
     thumbnail: {
-      url: creature.iconImage,
+      url: creature.furnitureImage,
     },
     image: {
-      url: creature.furnitureImage,
+      url: creature.iconImage,
     },
   }),
 };
@@ -57,10 +57,16 @@ const render = (renderer: Renderer | ReturnType<Renderer>, value: Value, languag
 
   embed.title ??= `${title}: ${capitalize(language === 'nl' ? getDutchName(value) : getEnglishName(value))}`;
   embed.color ??= color;
-  embed.fields = [ {
-    name: `${language === 'nl' ? 'Engelse' : 'Nederlandse'} naam`,
-    value: capitalize(language === 'nl' ? getEnglishName(value) : getDutchName(value)),
-  }, ...embed.fields.filter(f => f?.value) ];
+  embed.fields = [
+    {
+      name: `${language === 'nl' ? 'Engelse' : 'Nederlandse'} naam`,
+      value: capitalize(language === 'nl' ? getEnglishName(value) : getDutchName(value)),
+      inline: true,
+    },
+    ...embed.fields
+      .filter(f => f?.value)
+      .map(f => ({ ...f, inline: true })),
+  ];
 
   return embed;
 };

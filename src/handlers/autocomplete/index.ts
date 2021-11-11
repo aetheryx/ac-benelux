@@ -29,6 +29,10 @@ export function handleAutocompleteInteraction(
     searchResults = searchResults.slice(0, 1);
   }
 
+  if (!query.value.includes(' ')) {
+    searchResults = searchResults.filter(result => result.toLowerCase().includes(query.value.toLowerCase()));
+  }
+
   return {
     type: InteractionResponseType.ApplicationCommandAutocompleteResult,
     data: {
