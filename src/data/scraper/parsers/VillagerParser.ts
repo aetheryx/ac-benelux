@@ -46,10 +46,10 @@ export class VillagerParser extends Parser<Villager> {
       filename,
     } = Parser.objectify(rawData, this.properties);
 
-    const villager: Villager = {
-      iconImageURL: Parser.parseImageCell(iconImage),
-      photoImageURL: Parser.parseImageCell(photoImage),
-      houseImageURL: Parser.parseImageCell(houseImage),
+    return {
+      iconImageURL: Parser.parseImageFormula(iconImage),
+      photoImageURL: Parser.parseImageFormula(photoImage),
+      houseImageURL: Parser.parseImageFormula(houseImage),
       subType: subType.toUpperCase(),
       id: filename,
       localisations: {
@@ -57,8 +57,6 @@ export class VillagerParser extends Parser<Villager> {
         USen: this.buildLocalised(rawData, 'USen'),
       },
     };
-
-    return villager;
   }
 
   private buildLocalised(
@@ -86,17 +84,17 @@ export class VillagerParser extends Parser<Villager> {
       species: localiser.get('aeon:String/STR_Race', {
         label: `${label.replace(/\d*$/, '')}_${gender === 'Male' ? 'M' : 'F'}`,
       }),
-      gender: localiser.get('custom:villager/gender', { gender }),
-      personality: localiser.get('custom:villager/personality', { personality }),
-      hobby: localiser.get('custom:villager/hobby', { hobby }),
+      gender: localiser.get('custom:villager/gender', gender),
+      personality: localiser.get('custom:villager/personality', personality),
+      hobby: localiser.get('custom:villager/hobby', hobby),
       catchPhrase: localiser.get('aeon:String/Npc/STR_NNpcPhrase', { label }),
-      favoriteSong: localiser.get('aeon:String/Item/STR_ItemName_82_Music', { favoriteSong }),
+      favoriteSong: localiser.get('aeon:String/Item/STR_ItemName_82_Music', favoriteSong),
       favoriteSaying: Parser.cleanQuote(localiser.get('aeon:TalkSys/SYS_Motto', { label })),
       styles: Parser.dedupe([ style1, style2 ].map(style =>
-        localiser.get('custom:villager/style', { style })
+        localiser.get('custom:villager/style', style)
       )),
       colors: Parser.dedupe([ color1, color2 ].map(color =>
-        localiser.get('custom:villager/color', { color })
+        localiser.get('custom:villager/color', color)
       )),
     };
   }

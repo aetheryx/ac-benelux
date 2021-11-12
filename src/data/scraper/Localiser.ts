@@ -42,13 +42,13 @@ export class Localiser {
 
   public get(
     pathIdentifier: PathIdentifier,
-    query: Record<'label' | string, string>,
+    query: { label: string } | string,
   ): string {
     const file = this.readFile(pathIdentifier);
     const entry = file.find(e => (
-      'label' in query
-        ? e.label?.toLowerCase() === query.label.toLowerCase()
-        : e.locale.USen?.toLowerCase() === Object.values(query)[0]?.toLowerCase()
+      typeof query === 'string'
+        ? e.locale.USen?.toLowerCase() === query.toLowerCase()
+        : e.label?.toLowerCase() === query.label.toLowerCase()
     ));
 
     return entry.locale[this.targetLanguage];

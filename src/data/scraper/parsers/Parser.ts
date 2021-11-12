@@ -7,7 +7,7 @@ export abstract class Parser<T> {
   protected abstract sheetName: string;
   public abstract parse(data: string[]): T;
 
-  protected static parseImageCell(formula: string): string {
+  protected static parseImageFormula(formula: string): string {
     return formula
       .trim()
       .slice(
