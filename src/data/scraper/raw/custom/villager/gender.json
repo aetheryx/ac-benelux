@@ -1,0 +1,16 @@
+[
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Male",
+      "EUnl": "Man"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Female",
+      "EUnl": "Vrouw"
+    }
+  }
+]

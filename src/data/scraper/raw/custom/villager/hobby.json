@@ -1,0 +1,44 @@
+[
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Nature",
+      "EUnl": "Nature"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Fitness",
+      "EUnl": "Fitness"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Play",
+      "EUnl": "Play"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Education",
+      "EUnl": "Education"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Fashion",
+      "EUnl": "Fashion"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Music",
+      "EUnl": "Music"
+    }
+  }
+]

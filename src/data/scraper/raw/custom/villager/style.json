@@ -1,0 +1,44 @@
+[
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Cool",
+      "EUnl": "Cool"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Active",
+      "EUnl": "Active"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Simple",
+      "EUnl": "Simple"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Elegant",
+      "EUnl": "Elegant"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Cute",
+      "EUnl": "Cute"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Gorgeous",
+      "EUnl": "Gorgeous"
+    }
+  }
+]

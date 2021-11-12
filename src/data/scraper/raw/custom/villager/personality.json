@@ -1,0 +1,58 @@
+[
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Cranky",
+      "EUnl": "Cranky"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Peppy",
+      "EUnl": "Peppy"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Big Sister",
+      "EUnl": "Big Sister"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Lazy",
+      "EUnl": "Lazy"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Normal",
+      "EUnl": "Normal"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Snooty",
+      "EUnl": "Snooty"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Jock",
+      "EUnl": "Jock"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Smug",
+      "EUnl": "Smug"
+    }
+  }
+]
