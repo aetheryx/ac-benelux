@@ -15,8 +15,8 @@ type PathIdentifier = `${'custom' | 'aeon'}:${string}`;
 export class Localiser {
   private static fileCache = new Map<string, File>();
   private static paths = {
-    'aeon': (path: string) => resolve(__dirname, `../scraper/raw/acnh-translations/JSON/${path}.msbt.json`),
-    'custom': (path: string) => resolve(__dirname, `../scraper/raw/custom/${path}.json`),
+    'aeon': (path: string) => resolve(__dirname, `../scraper/datasets/acnh-translations/JSON/${path}.msbt.json`),
+    'custom': (path: string) => resolve(__dirname, `../scraper/datasets/custom/${path}.json`),
   };
 
   private targetLanguage: Language;
@@ -43,7 +43,7 @@ export class Localiser {
   public get(
     pathIdentifier: PathIdentifier,
     query: { label: string } | string,
-  ): string {
+  ): string | null {
     const file = this.readFile(pathIdentifier);
     const entry = file.find(e => (
       typeof query === 'string'
@@ -51,7 +51,7 @@ export class Localiser {
         : e.label?.toLowerCase() === query.label.toLowerCase()
     ));
 
-    return entry.locale[this.targetLanguage];
+    return entry?.locale[this.targetLanguage] || null;
   }
 
   public formatDate(date: Dayjs): string {
