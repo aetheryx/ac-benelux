@@ -1,9 +1,12 @@
 import { Language, Localised } from '../types/Language';
 import { resolve } from 'node:path';
 import fs from 'node:fs';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import dayjsAdvancedFormat from 'dayjs/plugin/advancedFormat';
 import 'dayjs/locale/en';
 import 'dayjs/locale/nl';
+
+dayjs.extend(dayjsAdvancedFormat);
 
 type File<T = {}> = Array<T & {
   label: string;
@@ -17,6 +20,16 @@ export class Localiser {
   private static paths = {
     'aeon': (path: string) => resolve(__dirname, `../scraper/datasets/acnh-translations/JSON/${path}.msbt.json`),
     'custom': (path: string) => resolve(__dirname, `../scraper/datasets/custom/${path}.json`),
+  };
+  private static languages: Record<Language, { locale: string; format: string }> = {
+    EUnl: {
+      locale: 'nl',
+      format: 'D MMMM',
+    },
+    USen: {
+      locale: 'en',
+      format: 'MMMM Do',
+    },
   };
 
   private targetLanguage: Language;
@@ -55,8 +68,9 @@ export class Localiser {
   }
 
   public formatDate(date: Dayjs): string {
+    const language = Localiser.languages[this.targetLanguage];
     return date
-      .locale(this.targetLanguage === 'EUnl' ? 'nl' : 'en')
-      .format('MMMM, D');
+      .locale(language.locale)
+      .format(language.format);
   }
 }
