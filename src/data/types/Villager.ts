@@ -1,9 +1,9 @@
+import { Dayjs } from 'dayjs';
 import { Localised } from './Language';
 
 export interface VillagerLocalisations {
   name: string;
   personality: string;
-  birthday: string;
   species: string;
   gender: string;
   hobby: string;
@@ -12,6 +12,7 @@ export interface VillagerLocalisations {
   favoriteSaying: string;
   styles: string[];
   colors: string[];
+  formattedBirthday: string;
 }
 
 export interface Villager {
@@ -20,5 +21,6 @@ export interface Villager {
   houseImageURL: string;
   subType: string;
   id: string;
+  birthday: Dayjs;
   localisations: Localised<VillagerLocalisations>;
 }

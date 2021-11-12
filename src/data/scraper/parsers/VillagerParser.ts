@@ -44,6 +44,7 @@ export class VillagerParser extends Parser<Villager> {
       houseImage,
       subType,
       filename,
+      birthday,
     } = Parser.objectify(rawData, this.properties);
 
     return {
@@ -52,6 +53,7 @@ export class VillagerParser extends Parser<Villager> {
       houseImageURL: Parser.parseImageFormula(houseImage),
       subType: subType.toUpperCase(),
       id: filename,
+      birthday: Parser.parseDate(birthday),
       localisations: {
         EUnl: this.buildLocalised(rawData, 'EUnl'),
         USen: this.buildLocalised(rawData, 'USen'),
@@ -80,7 +82,7 @@ export class VillagerParser extends Parser<Villager> {
 
     return {
       name: localiser.get('aeon:String/Npc/STR_NNpcName', { label }),
-      birthday: localiser.formatDate(Parser.parseDate(birthday)),
+      formattedBirthday: localiser.formatDate(Parser.parseDate(birthday)),
       species: localiser.get('aeon:String/STR_Race', {
         label: `${label.replace(/\d*$/, '')}_${gender === 'Male' ? 'M' : 'F'}`,
       }),

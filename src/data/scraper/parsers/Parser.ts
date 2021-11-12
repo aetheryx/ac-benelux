@@ -5,7 +5,7 @@ dayjs.extend(dayjsObjectSupport);
 
 export abstract class Parser<T> {
   protected abstract sheetName: string;
-  public abstract parse(data: string[]): T;
+  public abstract parse(data: string[]): T | Generator<T>;
 
   protected static parseImageFormula(formula: string): string {
     return formula
@@ -16,7 +16,7 @@ export abstract class Parser<T> {
       );
   }
 
-  protected static parseDate(date: string) {
+  protected static parseDate(date: string): dayjs.Dayjs {
     const [ month, day ] = date.split('/');
     // @ts-ignore: not included in types because of objectSupport plugin
     return dayjs({
