@@ -2,6 +2,7 @@ import { Parser } from './Parser';
 import { Villager, VillagerLocalisations } from '../../types/Villager';
 import { Language } from '../../types/Language';
 import { Localiser } from '../Localiser';
+import dayjs from 'dayjs';
 
 export class VillagerParser extends Parser<Villager> {
   public sheetName = 'Villagers';
@@ -53,12 +54,21 @@ export class VillagerParser extends Parser<Villager> {
       houseImageURL: Parser.parseImageFormula(houseImage),
       subType: subType.toUpperCase(),
       id: filename,
-      birthday: Parser.parseDate(birthday),
+      birthday: this.parseDate(birthday),
       localisations: {
         EUnl: this.buildLocalised(rawData, 'EUnl'),
         USen: this.buildLocalised(rawData, 'USen'),
       },
     };
+  }
+
+  private parseDate(date: string): dayjs.Dayjs {
+    const [ month, day ] = date.split('/');
+    // @ts-ignore: not included in types because of objectSupport plugin
+    return dayjs({
+      month: Number(month) - 1,
+      day: Number(day),
+    });
   }
 
   private buildLocalised(
@@ -82,7 +92,7 @@ export class VillagerParser extends Parser<Villager> {
 
     return {
       name: localiser.get('aeon:String/Npc/STR_NNpcName', { label }),
-      formattedBirthday: localiser.formatDate(Parser.parseDate(birthday)),
+      formattedBirthday: localiser.formatDate(this.parseDate(birthday)),
       species: localiser.get('aeon:String/STR_Race', {
         label: `${label.replace(/\d*$/, '')}_${gender === 'Male' ? 'M' : 'F'}`,
       }),

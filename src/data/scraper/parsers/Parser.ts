@@ -16,15 +16,6 @@ export abstract class Parser<T> {
       );
   }
 
-  protected static parseDate(date: string): dayjs.Dayjs {
-    const [ month, day ] = date.split('/');
-    // @ts-ignore: not included in types because of objectSupport plugin
-    return dayjs({
-      month: Number(month) - 1,
-      day: Number(day),
-    });
-  }
-
   protected static dedupe<E>(arr: E[]): E[] {
     return [ ...new Set(arr) ];
   }
