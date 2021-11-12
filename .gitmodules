@@ -1,3 +1,6 @@
 [submodule "discord-api-types"]
 	path = discord-api-types
 	url = https://github.com/discordjs/discord-api-types
+[submodule "src/data/scraper/rawData/acnh-translations"]
+	path = src/data/scraper/rawData/acnh-translations
+	url = https://gitlab.com/AeonSake/acnh-translations

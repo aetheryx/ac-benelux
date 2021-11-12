@@ -1,0 +1,49 @@
+Villagers
+  - Villagers
+
+Unused
+  - Editor Read Me
+  - Read Me
+  - Unused Unique IDs
+
+Reactions
+  - Reactions
+
+Todo
+  - Housewares
+  - Miscellaneous
+  - Wall-mounted
+  - Ceiling Decor
+  - Interior Structures
+  - Wallpaper
+  - Floors
+  - Rugs
+  - Photos
+  - Posters
+  - Tools/Goods
+  - Fencing
+  - Tops
+  - Bottoms
+  - Dress-Up
+  - Headwear
+  - Accessories
+  - Socks
+  - Shoes
+  - Bags
+  - Umbrellas
+  - Clothing Other
+  - Music
+  - Insects
+  - Fish
+  - Sea Creatures
+  - Fossils
+  - Artwork
+  - Gyroids
+  - Other
+  - Construction
+  - Recipes
+  - Achievements
+  - Special NPCs
+  - Message Cards
+  - Seasons and Events
+  - Paradise Planning
