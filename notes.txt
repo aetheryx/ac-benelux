@@ -1,4 +1,4 @@
-Villagers
+Villager
   - Villagers
 
 Unused
@@ -6,8 +6,14 @@ Unused
   - Read Me
   - Unused Unique IDs
 
-Reactions
+Reaction
   - Reactions
+
+TimePeriod
+  - Seasons and Events
+
+MessageCard
+  - Message Cards
 
 Todo
   - Housewares
@@ -44,6 +50,5 @@ Todo
   - Recipes
   - Achievements
   - Special NPCs
-  - Message Cards
   - Seasons and Events
   - Paradise Planning
