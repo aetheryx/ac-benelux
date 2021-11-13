@@ -79,7 +79,6 @@ export class VillagerParser extends Parser<Villager> {
       gender,
       personality,
       hobby,
-      birthday,
       favoriteSong,
       style1,
       style2,
@@ -92,7 +91,6 @@ export class VillagerParser extends Parser<Villager> {
 
     return {
       name: localiser.get('aeon:String/Npc/STR_NNpcName', { label }),
-      formattedBirthday: localiser.formatDate(this.parseDate(birthday)),
       species: localiser.get('aeon:String/STR_Race', {
         label: `${label.replace(/\d*$/, '')}_${gender === 'Male' ? 'M' : 'F'}`,
       }),

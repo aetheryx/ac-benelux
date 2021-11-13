@@ -12,7 +12,6 @@ export interface VillagerLocalisations {
   favoriteSaying: string;
   styles: string[];
   colors: string[];
-  formattedBirthday: string;
 }
 
 export interface Villager {

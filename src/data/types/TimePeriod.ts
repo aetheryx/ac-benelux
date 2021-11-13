@@ -15,7 +15,6 @@ type DateRange = DateKind<'range'> & {
 export interface TimePeriodLocalisations {
   name: string;
   type: string;
-  dates: string;
 }
 
 export interface TimePeriod {

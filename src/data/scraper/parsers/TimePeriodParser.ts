@@ -44,17 +44,15 @@ export class TimePeriodParser extends Parser<TimePeriod> {
     const length = new Set(labels.map(label => label.replace(/\d+/g, ''))).size;
 
     for (let i = 0; i < length; i++) {
-      const dates = this.buildDates(
-        length === 1
-          ? northernHemisphereDates
-          : northernHemisphereDates.split(';')[i].trim()
-      );
-
       yield {
-        dates,
+        dates: this.buildDates(
+          length === 1
+            ? northernHemisphereDates
+            : northernHemisphereDates.split(';')[i].trim()
+        ),
         localisations: {
-          EUnl: this.buildLocalised(rawData, 'EUnl', dates, i),
-          USen: this.buildLocalised(rawData, 'USen', dates, i),
+          EUnl: this.buildLocalised(rawData, 'EUnl', i),
+          USen: this.buildLocalised(rawData, 'USen', i),
         },
       };
     }
@@ -111,7 +109,6 @@ export class TimePeriodParser extends Parser<TimePeriod> {
   private buildLocalised(
     rawData: string[],
     targetLanguage: Language,
-    dates: TimePeriod['dates'],
     index?: number,
   ): TimePeriodLocalisations {
     const {
@@ -125,15 +122,6 @@ export class TimePeriodParser extends Parser<TimePeriod> {
 
     return {
       type: localiser.get('custom:timePeriod/type', type),
-
-      dates: dates.kind === 'list'
-        ? dates.dates
-          .map(date => localiser.formatDate(date))
-          .join('; ')
-        : localiser.get('custom:timePeriod/dates', { label: 'range' })
-          .replace('$from', localiser.formatDate(dates.from))
-          .replace('$to', localiser.formatDate(dates.to)),
-
       name: localiser.get('custom:timePeriod/name', { label }) ??
         localiser.get('aeon:String/STR_EventName', { label }) ??
         localiser.get('custom:timePeriod/name', name) ??
