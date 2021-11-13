@@ -1,0 +1,9 @@
+[
+  {
+    "label": "range",
+    "locale": {
+      "USen": "From $from until $to",
+      "EUnl": "Van $from tot $to"
+    }
+  }
+]

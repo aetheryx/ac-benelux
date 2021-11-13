@@ -1,0 +1,44 @@
+[
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Crafting season",
+      "EUnl": "Crafting season"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Zodiac season",
+      "EUnl": "Zodiac season"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Shopping season",
+      "EUnl": "Shopping season"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Basegame event",
+      "EUnl": "Basegame event"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Special event",
+      "EUnl": "Special event"
+    }
+  },
+  {
+    "label": "N/A",
+    "locale": {
+      "USen": "Nook Shopping event",
+      "EUnl": "Nook Shopping event"
+    }
+  }
+]

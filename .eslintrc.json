@@ -63,7 +63,7 @@
     "@typescript-eslint/no-shadow": "error",
     "no-shadow-restricted-names": "error",
     "no-undef-init": "error",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
     "array-bracket-newline": ["error", "consistent"],
     "array-bracket-spacing": ["error", "always"],
     "block-spacing": ["error", "always"],
