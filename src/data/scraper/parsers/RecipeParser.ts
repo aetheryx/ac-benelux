@@ -4,7 +4,7 @@ import { Localiser } from '../Localiser';
 import { Recipe, RecipeLocalisations, RecipeMaterial } from 'src/data/types/Recipe';
 
 export class RecipeParser extends Parser<Recipe> {
-  public sheetName = 'Recipes';
+  public sheetNames = [ 'Recipes' ];
   public properties = [
     'name',
     'imageURL',

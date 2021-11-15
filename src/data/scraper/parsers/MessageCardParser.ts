@@ -4,7 +4,7 @@ import { Localiser } from '../Localiser';
 import { MessageCard, MessageCardLocalisations } from 'src/data/types/MessageCard';
 
 export class MessageCardParser extends Parser<MessageCard> {
-  public sheetName = 'Message Cards';
+  public sheetNames = [ 'Message Cards' ];
   public properties = [
     'name',
     'imageURL',

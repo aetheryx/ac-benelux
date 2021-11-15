@@ -5,7 +5,7 @@ import { Localiser } from '../Localiser';
 import dayjs from 'dayjs';
 
 export class VillagerParser extends Parser<Villager> {
-  public sheetName = 'Villagers';
+  public sheetNames = [ 'Villagers' ];
   public properties = [
     'name',
     'iconImage',

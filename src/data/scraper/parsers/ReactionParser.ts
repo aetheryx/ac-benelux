@@ -4,7 +4,7 @@ import { Localiser } from '../Localiser';
 import { Reaction, ReactionLocalisations } from 'src/data/types/Reaction';
 
 export class ReactionParser extends Parser<Reaction> {
-  public sheetName = 'Reactions';
+  public sheetNames = [ 'Reactions' ];
   public properties = [
     'index',
     'name',

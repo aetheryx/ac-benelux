@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from 'dayjs';
 export class TimePeriodParser extends Parser<TimePeriod> {
   private static extractID = /^.* \((?:.* )?(?<id>\d)\)$/;
   private static EM_DASH = '–';
-  public sheetName = 'Seasons And Events';
+  public sheetNames = [ 'Seasons And Events' ];
   public properties = [
     'name',
     'type',

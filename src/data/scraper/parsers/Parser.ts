@@ -4,8 +4,8 @@ import dayjsObjectSupport from 'dayjs/plugin/objectSupport';
 dayjs.extend(dayjsObjectSupport);
 
 export abstract class Parser<T> {
-  protected abstract sheetName: string;
-  public abstract parse(data: string[]): T | Generator<T>;
+  protected abstract sheetNames: string[];
+  public abstract parse(data: string[], sheetName: string): T | Generator<T>;
 
   protected static parseImageFormula(formula: string): string {
     return formula
