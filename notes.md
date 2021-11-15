@@ -1,11 +1,6 @@
 Villager
   - Villagers
 
-Unused
-  - Editor Read Me
-  - Read Me
-  - Unused Unique IDs
-
 Reaction
   - Reactions
 
@@ -16,6 +11,16 @@ MessageCard
   - Message Cards
 
 Todo
+  - Tops
+  - Bottoms
+  - Dress-Up
+  - Headwear
+  - Accessories
+  - Socks
+  - Shoes
+  - Bags
+  - Umbrellas
+  - Clothing Other
   - Housewares
   - Miscellaneous
   - Wall-mounted
@@ -28,16 +33,6 @@ Todo
   - Posters
   - Tools/Goods
   - Fencing
-  - Tops
-  - Bottoms
-  - Dress-Up
-  - Headwear
-  - Accessories
-  - Socks
-  - Shoes
-  - Bags
-  - Umbrellas
-  - Clothing Other
   - Music
   - Insects
   - Fish
@@ -50,5 +45,9 @@ Todo
   - Recipes
   - Achievements
   - Special NPCs
-  - Seasons and Events
   - Paradise Planning
+
+Unused
+  - Editor Read Me
+  - Read Me
+  - Unused Unique IDs

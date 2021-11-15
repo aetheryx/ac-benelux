@@ -1,6 +1,7 @@
 import { Language, Localised } from '../types/Language';
 import { resolve } from 'node:path';
 import fs from 'node:fs';
+import globby from 'globby';
 import dayjs, { Dayjs } from 'dayjs';
 import dayjsAdvancedFormat from 'dayjs/plugin/advancedFormat';
 import 'dayjs/locale/en';
@@ -17,9 +18,12 @@ type PathIdentifier = `${'custom' | 'aeon'}:${string}`;
 
 export class Localiser {
   private static fileCache = new Map<string, File>();
+  private static globCache = new Map<string, string[]>();
   private static paths = {
-    'aeon': (path: string) => resolve(__dirname, `../scraper/datasets/acnh-translations/JSON/${path}.msbt.json`),
-    'custom': (path: string) => resolve(__dirname, `../scraper/datasets/custom/${path}.json`),
+    'aeon': (path: string) =>
+      resolve(__dirname, `../scraper/datasets/acnh-translations/JSON/${path}.msbt.json`),
+    'custom': (path: string) =>
+      resolve(__dirname, `../scraper/datasets/custom/${path}.json`),
   };
   private static languages: Record<Language, { locale: string; format: string }> = {
     EUnl: {
@@ -41,16 +45,28 @@ export class Localiser {
   private readFile<F = Record<string, any>>(
     pathIdentifier: PathIdentifier
   ): File<F> {
-    const [ source, subPath ] = pathIdentifier.split(':');
-    const path = Localiser.paths[source](subPath);
+    const [ source, subPattern ] = pathIdentifier.split(':');
+    const pattern = Localiser.paths[source](subPattern);
 
-    if (Localiser.fileCache.has(path)) {
-      return Localiser.fileCache.get(path) as File<F>;
+    let paths: string[];
+    if (Localiser.globCache.has(pattern)) {
+      paths = Localiser.globCache.get(pattern);
     } else {
-      const file = JSON.parse(fs.readFileSync(path).toString().trim());
-      Localiser.fileCache.set(path, file);
-      return file;
+      paths = globby.sync(pattern);
+      Localiser.globCache.set(pattern, paths);
     }
+
+    const files = paths.map(path => {
+      if (Localiser.fileCache.has(path)) {
+        return Localiser.fileCache.get(path) as File<F>;
+      } else {
+        const file: File<F> = JSON.parse(fs.readFileSync(path).toString().trim());
+        Localiser.fileCache.set(path, file);
+        return file;
+      }
+    });
+
+    return files.flat();
   }
 
   public get(
@@ -60,8 +76,8 @@ export class Localiser {
     const file = this.readFile(pathIdentifier);
     const entry = file.find(e => (
       typeof query === 'string'
-        ? e.locale.USen?.toLowerCase() === query.toLowerCase()
-        : e.label?.toLowerCase() === query.label.toLowerCase()
+        ? e.locale.USen?.toLowerCase() === query.toLowerCase().trim()
+        : e.label?.toLowerCase() === query.label.toLowerCase().trim()
     ));
 
     return entry?.locale[this.targetLanguage] || null;

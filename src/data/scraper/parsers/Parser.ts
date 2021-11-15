@@ -16,6 +16,14 @@ export abstract class Parser<T> {
       );
   }
 
+  protected static parsePrice(cell: string): number | null {
+    if ([ 'NA', 'NFS' ].includes(cell)) {
+      return null;
+    }
+
+    return Number(cell);
+  }
+
   protected static dedupe<E>(arr: E[]): E[] {
     return [ ...new Set(arr) ];
   }

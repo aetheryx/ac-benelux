@@ -42,7 +42,7 @@ export class MessageCardParser extends Parser<MessageCard> {
 
     return {
       imageURL: Parser.parseImageFormula(imageURL),
-      purchasePrice: buy === 'NFS' ? null : Number(buy),
+      purchasePrice: Parser.parsePrice(buy),
       localisations: {
         EUnl: this.buildLocalised(rawData, 'EUnl'),
         USen: this.buildLocalised(rawData, 'USen'),
