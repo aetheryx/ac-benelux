@@ -96,10 +96,11 @@ export class VillagerParser extends Parser<Villager> {
       favoriteSong: localiser.get('aeon:String/Item/STR_ItemName_82_Music', favoriteSong),
       favoriteSaying: Parser.cleanQuote(localiser.get('aeon:TalkSys/SYS_Motto', { label })),
       styles: Parser.dedupe([ style1, style2 ].map(style =>
+        localiser.get('aeon:String/Remake/STR_Remake_BodyColor', style) ??
         localiser.get('custom:villager/style', style)
       )),
       colors: Parser.dedupe([ color1, color2 ].map(color =>
-        localiser.get('custom:villager/color', color)
+        localiser.get('aeon:String/STR_Common_Color', color)
       )),
     };
   }
