@@ -47,21 +47,21 @@ export class RecipeParser extends Parser<Recipe> {
       imageURL,
       buy,
       sell,
+      recipesToUnlock,
       ...rest
     } = Parser.objectify(rawData, this.properties);
-
-    const materials: RecipeMaterial[] = Object.entries(rest)
-      .filter(([ column, value ]: string[]) => column.startsWith('quantity') && Number(value))
-      .map(([ column, value ]) => ({
-        itemID: Number(column.at(-1)),
-        quantity: Number(value),
-      }));
 
     return {
       imageURL: Parser.parseImageFormula(imageURL),
       buy: Parser.parsePrice(buy),
       sell: Parser.parsePrice(sell),
-      materials,
+      recipesToUnlock: Number(recipesToUnlock),
+      materials: Object.entries(rest)
+        .filter(([ column, value ]: string[]) => column.startsWith('quantity') && Number(value))
+        .map(([ column, value ]) => ({
+          itemID: Number(column.at(-1)),
+          quantity: Number(value),
+        })),
       localisations: {
         EUnl: this.buildLocalised(rawData, 'EUnl'),
         USen: this.buildLocalised(rawData, 'USen'),

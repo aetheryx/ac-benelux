@@ -19,5 +19,6 @@ export interface Recipe {
   materials: RecipeMaterial[];
   buy: number | null;
   sell: number | null;
+  recipesToUnlock: number;
   localisations: Localised<RecipeLocalisations>;
 }
