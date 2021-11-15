@@ -45,6 +45,10 @@ export class Localiser {
   private readFile<F = Record<string, any>>(
     pathIdentifier: PathIdentifier
   ): File<F> {
+    if (Localiser.fileCache.has(pathIdentifier)) {
+      return Localiser.fileCache.get(pathIdentifier) as File<F>;
+    }
+
     const [ source, subPattern ] = pathIdentifier.split(':');
     const pattern = Localiser.paths[source](subPattern);
 
@@ -56,17 +60,13 @@ export class Localiser {
       Localiser.globCache.set(pattern, paths);
     }
 
-    const files = paths.map(path => {
-      if (Localiser.fileCache.has(path)) {
-        return Localiser.fileCache.get(path) as File<F>;
-      } else {
-        const file: File<F> = JSON.parse(fs.readFileSync(path).toString().trim());
-        Localiser.fileCache.set(path, file);
-        return file;
-      }
-    });
+    const files: Array<File<F>> = paths.map(path => JSON.parse(fs.readFileSync(path).toString().trim()));
+    const file = files.flat();
+    if (!Localiser.fileCache.has(pathIdentifier)) {
+      Localiser.fileCache.set(pathIdentifier, file);
+    }
 
-    return files.flat();
+    return file;
   }
 
   public get(
