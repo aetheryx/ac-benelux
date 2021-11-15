@@ -1,64 +1,60 @@
 import { Parser } from './Parser';
 import { Villager, VillagerLocalisations } from '../../types/Villager';
-import { Language } from '../../types/Language';
-import { Localiser } from '../Localiser';
 import dayjs from 'dayjs';
 
 export class VillagerParser extends Parser<Villager> {
-  public sheetNames = [ 'Villagers' ];
-  public properties = [
-    'name',
-    'iconImage',
-    'photoImage',
-    'houseImage',
-    'species',
-    'gender',
-    'personality',
-    'subType',
-    'hobby',
-    'birthday',
-    'catchPhrase',
-    'favoriteSong',
-    'favoriteSaying',
-    'style1',
-    'style2',
-    'color1',
-    'color2',
-    'defaultClothing',
-    'defaultUmbrella',
-    'wallPaper',
-    'flooring',
-    'furnitureList',
-    'furnitureNameList',
-    'diyWorkbench',
-    'kitchenEquipment',
-    'versionAdded',
-    'nameColor',
-    'bubbleColor',
-    'filename',
-  ] as const;
+  public sheetNames = [
+    'Villagers',
+  ];
+  public properties = {
+    'Name': 'name',
+    'Icon Image': 'iconImage',
+    'Photo Image': 'photoImage',
+    'House Image': 'houseImage',
+    'Species': 'species',
+    'Gender': 'gender',
+    'Personality': 'personality',
+    'Subtype': 'subType',
+    'Hobby': 'hobby',
+    'Birthday': 'birthday',
+    'Catchphrase': 'catchPhrase',
+    'Favorite Song': 'favoriteSong',
+    'Favorite Saying': 'favoriteSaying',
+    'Style 1': 'style1',
+    'Style 2': 'style2',
+    'Color 1': 'color1',
+    'Color 2': 'color2',
+    'Default Clothing': 'defaultClothing',
+    'Default Umbrella': 'defaultUmbrella',
+    'Wallpaper': 'wallPaper',
+    'Flooring': 'flooring',
+    'Furniture List': 'furnitureList',
+    'Furniture Name List': 'furnitureNameList',
+    'DIY Workbench': 'diyWorkbench',
+    'Kitchen Equipment': 'kitchenEquipment',
+    'Version Added': 'versionAdded',
+    'Name Color': 'nameColor',
+    'Bubble Color': 'bubbleColor',
+    'Filename': 'filename',
+    'Unique Entry ID': 'uniqueEntryID',
+  } as const;
 
-  public parse(rawData: string[]): Villager {
+  public parse(header: Parser.Row, row: Parser.Row): Villager {
     const {
       iconImage,
       photoImage,
       houseImage,
       subType,
-      filename,
       birthday,
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
     return {
       iconImageURL: Parser.parseImageFormula(iconImage),
       photoImageURL: Parser.parseImageFormula(photoImage),
       houseImageURL: Parser.parseImageFormula(houseImage),
       subType: subType.toUpperCase(),
-      id: filename,
       birthday: this.parseDate(birthday),
-      localisations: {
-        EUnl: this.buildLocalised(rawData, 'EUnl'),
-        USen: this.buildLocalised(rawData, 'USen'),
-      },
+      localisations: this.buildLocalisations(header, row),
     };
   }
 
@@ -71,9 +67,10 @@ export class VillagerParser extends Parser<Villager> {
     });
   }
 
-  private buildLocalised(
-    rawData: string[],
-    targetLanguage: Language,
+  protected buildLocalisation(
+    header: Parser.Row,
+    row: Parser.Row,
+    localiser: Parser.Localiser,
   ): VillagerLocalisations {
     const {
       gender,
@@ -85,9 +82,7 @@ export class VillagerParser extends Parser<Villager> {
       color1,
       color2,
       filename: label,
-    } = Parser.objectify(rawData, this.properties);
-
-    const localiser = new Localiser(targetLanguage);
+    } = Parser.objectify(header, row, this.properties);
 
     return {
       name: localiser.get('aeon:String/Npc/STR_NNpcName', { label }),

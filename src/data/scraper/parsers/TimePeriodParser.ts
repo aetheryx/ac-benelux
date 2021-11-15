@@ -1,35 +1,35 @@
 import { Parser } from './Parser';
-import { Language } from '../../types/Language';
-import { Localiser } from '../Localiser';
 import { TimePeriod, TimePeriodLocalisations } from 'src/data/types/TimePeriod';
 import dayjs, { Dayjs } from 'dayjs';
 
 export class TimePeriodParser extends Parser<TimePeriod> {
   private static extractID = /^.* \((?:.* )?(?<id>\d)\)$/;
   private static EM_DASH = '–';
-  public sheetNames = [ 'Seasons And Events' ];
-  public properties = [
-    'name',
-    'type',
-    'versionAdded',
-    'versionLastUpdated',
-    'year',
-    'northernHemisphereDates',
-    'southernHemisphereDates',
-    'displayName',
-    'eventNotes',
-    'internalLabel',
-    'unlockDate',
-    'unlockMethod',
-    'uniqueEntryID',
-  ] as const;
+  public sheetNames = [
+    'Seasons And Events',
+  ];
+  public properties = {
+    'Name': 'name',
+    'Type': 'type',
+    'Version Added': 'versionAdded',
+    'Version Last Updated': 'versionLastUpdated',
+    'Year': 'year',
+    'Dates (Northern Hemisphere)': 'northernHemisphereDates',
+    'Dates (Southern Hemisphere)': 'southernHemisphereDates',
+    'Display Name': 'displayName',
+    'Event Notes': 'eventNotes',
+    'Internal Label': 'internalLabel',
+    'Unlock Date': 'unlockDate',
+    'Unlock Method': 'unlockMethod',
+    'Unique Entry ID': 'uniqueEntryID',
+  } as const;
 
-  public *parse(rawData: string[]): Generator<TimePeriod> {
+  public *parse(header: Parser.Row, row: Parser.Row): Generator<TimePeriod> {
     const {
       internalLabel,
       northernHemisphereDates,
       name,
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
     if (northernHemisphereDates === 'NA') {
       return null;
@@ -50,10 +50,7 @@ export class TimePeriodParser extends Parser<TimePeriod> {
             ? northernHemisphereDates
             : northernHemisphereDates.split(';')[i].trim()
         ),
-        localisations: {
-          EUnl: this.buildLocalised(rawData, 'EUnl', i),
-          USen: this.buildLocalised(rawData, 'USen', i),
-        },
+        localisations: this.buildLocalisations(header, row),
       };
     }
   }
@@ -106,18 +103,18 @@ export class TimePeriodParser extends Parser<TimePeriod> {
     }
   }
 
-  private buildLocalised(
-    rawData: string[],
-    targetLanguage: Language,
-    index?: number,
+  protected buildLocalisation(
+    header: Parser.Row,
+    row: Parser.Row,
+    localiser: Parser.Localiser,
+    index: number,
   ): TimePeriodLocalisations {
     const {
       type,
       internalLabel,
       name,
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
-    const localiser = new Localiser(targetLanguage);
     const label = internalLabel.split(';')[index].trim();
 
     return {

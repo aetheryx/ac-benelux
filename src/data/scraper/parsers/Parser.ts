@@ -1,14 +1,23 @@
 import dayjs from 'dayjs';
 import dayjsObjectSupport from 'dayjs/plugin/objectSupport';
+import { Language } from 'src/data/types/Language';
+import * as LocaliserModule from '../Localiser';
 
 dayjs.extend(dayjsObjectSupport);
 
-export abstract class Parser<T> {
-  protected abstract sheetNames: string[];
-  public abstract parse(data: string[], sheetName: string): T | Generator<T>;
+export namespace Parser {
+  export type Cell = string | number;
+  export type Row = Cell[];
+  export type Localiser = LocaliserModule.Localiser;
+}
 
-  protected static parseImageFormula(formula: string): string {
+export abstract class Parser<T extends { localisations: Record<Language, unknown> }> {
+  protected abstract sheetNames: string[];
+  public abstract parse(header: Parser.Row, row: Parser.Row, sheetName: string): T | Generator<T>;
+
+  protected static parseImageFormula(formula: Parser.Cell): string {
     return formula
+      .toString()
       .trim()
       .slice(
         '=IMAGE("'.length,
@@ -16,12 +25,12 @@ export abstract class Parser<T> {
       );
   }
 
-  protected static parsePrice(cell: string): number | null {
-    if ([ 'NA', 'NFS' ].includes(cell)) {
-      return null;
+  protected static parsePrice(cell: Parser.Cell): number | null {
+    if (typeof cell === 'number') {
+      return cell;
     }
 
-    return Number(cell);
+    return null;
   }
 
   protected static dedupe<E>(arr: E[]): E[] {
@@ -37,11 +46,40 @@ export abstract class Parser<T> {
   }
 
   protected static objectify<T extends string>(
-    data: string[],
-    properties: readonly T[],
+    header: Parser.Row,
+    data: Parser.Row,
+    properties: Readonly<Record<string, T>>,
   ): Record<T, string> {
     return Object.fromEntries(
-      properties.map((key, idx) => [ key, data[idx] ])
+      Object.entries<string>(properties)
+        .filter(([ key ]) => header.includes(key))
+        .map(([ key ], idx) => [ properties[key], data[idx] ])
     ) as Record<T, string>;
+  }
+
+  protected abstract buildLocalisation(
+    header: Parser.Row,
+    row: Parser.Row,
+    localiser: Parser.Localiser,
+    index?: number,
+  ): T['localisations'][Language];
+
+  protected buildLocalisations(
+    header: Parser.Row,
+    row: Parser.Row,
+    index?: number,
+  ): T['localisations'] {
+    return Object.fromEntries(
+      ([ 'EUnl', 'USen' ] as const) // todo
+        .map(language => [
+          language,
+          this.buildLocalisation(
+            header,
+            row,
+            new LocaliserModule.Localiser(language),
+            index
+          ),
+        ])
+    );
   }
 }

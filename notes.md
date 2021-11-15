@@ -10,7 +10,10 @@ TimePeriod
 MessageCard
   - Message Cards
 
-Todo
+Recipe
+  - Recipes
+
+Clothing
   - Tops
   - Bottoms
   - Dress-Up
@@ -21,6 +24,8 @@ Todo
   - Bags
   - Umbrellas
   - Clothing Other
+
+Todo
   - Housewares
   - Miscellaneous
   - Wall-mounted
@@ -42,7 +47,6 @@ Todo
   - Gyroids
   - Other
   - Construction
-  - Recipes
   - Achievements
   - Special NPCs
   - Paradise Planning

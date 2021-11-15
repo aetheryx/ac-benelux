@@ -19,7 +19,6 @@ export interface Villager {
   photoImageURL: string;
   houseImageURL: string;
   subType: string;
-  id: string;
   birthday: Dayjs;
   localisations: Localised<VillagerLocalisations>;
 }

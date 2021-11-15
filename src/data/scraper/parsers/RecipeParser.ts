@@ -1,55 +1,55 @@
 import { Parser } from './Parser';
-import { Language } from '../../types/Language';
-import { Localiser } from '../Localiser';
-import { Recipe, RecipeLocalisations, RecipeMaterial } from 'src/data/types/Recipe';
+import { Recipe, RecipeLocalisations } from 'src/data/types/Recipe';
 
 export class RecipeParser extends Parser<Recipe> {
-  public sheetNames = [ 'Recipes' ];
-  public properties = [
-    'name',
-    'imageURL',
-    'imageURLSouthernHemisphere',
-    'quantity1',
-    'material1',
-    'quantity2',
-    'material2',
-    'quantity3',
-    'material3',
-    'quantity4',
-    'material4',
-    'quantity5',
-    'material5',
-    'quantity6',
-    'material6',
-    'buy',
-    'sell',
-    'exchangePrice',
-    'exchangeCurrency',
-    'sources',
-    'sourceNotes',
-    'seasonsOrEvents',
-    'seasonOrEventExclusive',
-    'versionAdded',
-    'unlocked',
-    'recipesToUnlock',
-    'category',
-    'craftedItem',
-    'cardColor',
-    'diyIconFilename',
-    'diyIconFilenameSouthernHemisphere',
-    'serialID',
-    'internalID',
-    'uniqueEntryID',
-  ] as const;
+  public sheetNames = [
+    'Recipes',
+  ];
+  public properties = {
+    'Name': 'name',
+    'Image': 'imageURL',
+    'Image SH': 'imageURLSouthernHemisphere',
+    '#1': 'quantity1',
+    'Material 1': 'material1',
+    '#2': 'quantity2',
+    'Material 2': 'material2',
+    '#3': 'quantity3',
+    'Material 3': 'material3',
+    '#4': 'quantity4',
+    'Material 4': 'material4',
+    '#5': 'quantity5',
+    'Material 5': 'material5',
+    '#6': 'quantity6',
+    'Material 6': 'material6',
+    'Buy': 'buy',
+    'Sell': 'sell',
+    'Exchange Price': 'exchangePrice',
+    'Exchange Currency': 'exchangeCurrency',
+    'Source': 'sources',
+    'Source Notes': 'sourceNotes',
+    'Season/Event': 'seasonsOrEvents',
+    'Season/Event Exclusive': 'seasonOrEventExclusive',
+    'Version Added': 'versionAdded',
+    'Unlocked?': 'unlocked',
+    'Recipes to Unlock': 'recipesToUnlock',
+    'Category': 'category',
+    'Crafted Item Internal ID': 'craftedItem',
+    'Card Color': 'cardColor',
+    'DIY Icon Filename': 'diyIconFilename',
+    'DIY Icon Filename SH': 'diyIconFilenameSouthernHemisphere',
+    'Serial ID': 'serialID',
+    'Internal ID': 'internalID',
+    'Unique Entry ID': 'uniqueEntryID',
+  } as const;
 
-  public parse(rawData: string[]): Recipe {
+  public parse(header: Parser.Row, row: Parser.Row): Recipe {
     const {
       imageURL,
       buy,
       sell,
       recipesToUnlock,
       ...rest
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
     return {
       imageURL: Parser.parseImageFormula(imageURL),
@@ -62,16 +62,14 @@ export class RecipeParser extends Parser<Recipe> {
           itemID: Number(column.at(-1)),
           quantity: Number(value),
         })),
-      localisations: {
-        EUnl: this.buildLocalised(rawData, 'EUnl'),
-        USen: this.buildLocalised(rawData, 'USen'),
-      },
+      localisations: this.buildLocalisations(header, row),
     };
   }
 
-  private buildLocalised(
-    rawData: string[],
-    targetLanguage: Language,
+  protected buildLocalisation(
+    header: Parser.Row,
+    row: Parser.Row,
+    localiser: Parser.Localiser,
   ): RecipeLocalisations {
     const {
       name,
@@ -80,9 +78,7 @@ export class RecipeParser extends Parser<Recipe> {
       sourceNotes,
       category,
       ...rest
-    } = Parser.objectify(rawData, this.properties);
-
-    const localiser = new Localiser(targetLanguage);
+    } = Parser.objectify(header, row, this.properties);
 
     return {
       name: localiser.get('aeon:String/Item/STR_ItemName_*', name) ??

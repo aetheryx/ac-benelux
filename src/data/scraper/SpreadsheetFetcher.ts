@@ -24,7 +24,7 @@ export class SpreadsheetFetcher {
     });
   }
 
-  public async fetch(range: string): Promise<string[][]> {
+  public async fetch(range: string): Promise<{ header: string[]; values: string[][] }> {
     const sheetData = await this.client.spreadsheets.values.get({
       spreadsheetId: this.spreadsheetID,
       range,
@@ -32,7 +32,10 @@ export class SpreadsheetFetcher {
       valueRenderOption: 'FORMULA',
     });
 
-    return sheetData.data.values.slice(1);
+    return {
+      header: sheetData.data.values.shift(),
+      values: sheetData.data.values,
+    };
   }
 }
 

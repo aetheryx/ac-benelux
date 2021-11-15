@@ -1,40 +1,39 @@
 import { Parser } from './Parser';
-import { Language } from '../../types/Language';
-import { Localiser } from '../Localiser';
 import { MessageCard, MessageCardLocalisations } from 'src/data/types/MessageCard';
 
 export class MessageCardParser extends Parser<MessageCard> {
-  public sheetNames = [ 'Message Cards' ];
-  public properties = [
-    'name',
-    'imageURL',
-    'buy',
-    'backColor',
-    'bodyColor',
-    'headColor',
-    'footColor',
-    'penColor1',
-    'penColor2',
-    'penColor3',
-    'penColor4',
-    'startDate',
-    'endDate',
-    'nhStartDate',
-    'nhEndDate',
-    'nhEndDate',
-    'shStartDate',
-    'shEndDate',
-    'version',
-    'internalID',
-    'uniqueEntryID',
-  ] as const;
+  public sheetNames = [
+    'Message Cards',
+  ];
+  public properties = {
+    'Name': 'name',
+    'Image': 'imageURL',
+    'Buy': 'buy',
+    'Back Color': 'backColor',
+    'Body Color': 'bodyColor',
+    'Head Color': 'headColor',
+    'Foot Color': 'footColor',
+    'Pen Color 1': 'penColor1',
+    'Pen Color 2': 'penColor2',
+    'Pen Color 3': 'penColor3',
+    'Pen Color 4': 'penColor4',
+    'Start Date': 'startDate',
+    'End Date': 'endDate',
+    'NH Start Date': 'nhStartDate',
+    'NH End Date': 'nhEndDate',
+    'SH Start Date': 'shStartDate',
+    'SH End Date': 'shEndDate',
+    'Version': 'version',
+    'Internal ID': 'internalID',
+    'Unique Entry ID': 'uniqueEntryID',
+  } as const;
 
-  public parse(rawData: string[]): MessageCard {
+  public parse(header: Parser.Row, row: Parser.Row): MessageCard {
     const {
       name,
       imageURL,
       buy,
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
     if (name.endsWith('00')) {
       return null;
@@ -43,23 +42,20 @@ export class MessageCardParser extends Parser<MessageCard> {
     return {
       imageURL: Parser.parseImageFormula(imageURL),
       purchasePrice: Parser.parsePrice(buy),
-      localisations: {
-        EUnl: this.buildLocalised(rawData, 'EUnl'),
-        USen: this.buildLocalised(rawData, 'USen'),
-      },
+      localisations: this.buildLocalisations(header, row),
     };
   }
 
-  private buildLocalised(
-    rawData: string[],
-    targetLanguage: Language,
+  protected buildLocalisation(
+    header: Parser.Row,
+    row: Parser.Row,
+    localiser: Parser.Localiser,
   ): MessageCardLocalisations {
     const {
       name,
       imageURL,
-    } = Parser.objectify(rawData, this.properties);
+    } = Parser.objectify(header, row, this.properties);
 
-    const localiser = new Localiser(targetLanguage);
     const mailPrefix = 'Card from ';
     const mailName = name.startsWith(mailPrefix) && name.replace(mailPrefix, '').toLowerCase();
 
